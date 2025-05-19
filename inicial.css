@@ -1,0 +1,401 @@
+
+    /* Reset e estilos globais */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f0e6d9 0%, #e0c9ab 100%);
+      min-height: 87vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #f0f0ea 0%, #f0f0ea 100%);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      z-index: 1000;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #6a4c2f;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 30px;
+    }
+    
+    nav ul li a {
+      text-decoration:dashed;
+    color: #6a4c2f;
+    top: 3px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    }
+    
+    nav ul li a:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #6a4c2f;
+      transition: width 0.3s ease;
+    }
+    
+    nav ul li a:hover:after {
+      width: 100%;
+    }
+    
+    .sesi-logo {
+      height: 40px;
+      margin-left: auto;
+      margin-right: 15px;
+    }
+    
+    .login-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .login-btn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .login-btn img {
+      height: 25px;
+      width: 25px;
+    }
+    
+    /* Clouds */
+    .cloud {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      filter: blur(10px);
+    }
+    
+    .cloud1 {
+      width: 180px;
+      height: 80px;
+      top: 15%;
+      left: 10%;
+      animation: float 20s infinite ease-in-out;
+    }
+    
+    .cloud2 {
+      width: 250px;
+      height: 100px;
+      bottom: 15%;
+      right: 10%;
+      animation: float 25s infinite ease-in-out reverse;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-15px) translateX(15px); }
+      50% { transform: translateY(0) translateX(30px); }
+      75% { transform: translateY(15px) translateX(15px); }
+    }
+    
+    /* Main content */
+    .container {
+      max-width: 1200px;
+      margin: 7rem auto 2rem;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .lottie-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .content-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    
+    /* Panels */
+    .panel {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+    }
+    
+    .panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Left panel */
+    .left-panel h2 {
+      color: #6a4c2f;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      position: relative;
+    }
+    
+    .left-panel h2::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #8b6b42, #6a4c2f);
+      bottom: -8px;
+      left: 0;
+    }
+    
+    .left-panel p {
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    
+    .info-btn {
+      background: linear-gradient(135deg, #8b6b42 0%, #6a4c2f 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.8rem 2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(106, 76, 47, 0.3);
+    }
+    
+    .info-btn:hover {
+      background: linear-gradient(135deg, #6a4c2f 0%, #8b6b42 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(106, 76, 47, 0.4);
+    }
+    
+    .info-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(106, 76, 47, 0.3);
+    }
+    
+    /* Right panel */
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+    
+    .right-panel h1 {
+      color: #6a4c2f;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .right-panel h1::after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #6a4c2f, transparent);
+      bottom: -8px;
+      left: 25%;
+    }
+    
+    .question-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #6a4c2f;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .question-icon:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.1);
+    }
+    
+    .question-icon::after {
+      content: '?';
+    }
+    
+    .buttons-area {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .quiz-btn {
+      background-color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #6a4c2f;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .quiz-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(139, 107, 66, 0.2), rgba(106, 76, 47, 0.2));
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
+    
+    .quiz-btn:hover {
+      border-color: #6a4c2f;
+      color: #6a4c2f;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .quiz-btn:hover::before {
+      width: 100%;
+    }
+    
+    .quiz-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .left-panel, .right-panel {
+      animation: fadeIn 0.8s ease forwards;
+    }
+    
+    .left-panel {
+      animation-delay: 0.2s;
+    }
+    
+    .right-panel {
+      animation-delay: 0.4s;
+    }
+    
+    /* Responsive Design */
+    @media screen and (max-width: 992px) {
+      .content-wrapper {
+        grid-template-columns: 1fr;
+      }
+      
+      .left-panel, .right-panel {
+        animation-delay: 0s;
+      }
+    }
+    
+    @media screen and (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+        padding: 15px;
+      }
+      
+      nav ul li {
+        margin-left: 15px;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .sesi-logo {
+        height: 30px;
+      }
+      
+      .login-btn {
+        width: 35px;
+        height: 35px;
+      }
+      
+      .cloud1, .cloud2 {
+        opacity: 0.5;
+      }
+      
+      .container {
+        margin-top: 5rem;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .panel {
+        padding: 1.5rem;
+      }
+      
+      .info-btn, .quiz-btn {
+        padding: 0.7rem 1.5rem;
+      }
+      
+      .question-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
+      }
+    }

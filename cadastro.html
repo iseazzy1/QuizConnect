@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Connect - Cadastro</title>
+    <link rel="stylesheet" href="cadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Nuvens Decorativas -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Quiz Connect</div>
+        <nav>
+            <ul>
+                <li><a href="inicial.html">Turma</a></li>
+                <li><a href="cadastro.html">3DS</a></li>
+            </ul>
+        </nav>
+        <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+        <button class="login-btn" title="Login">
+            <img src="logo.png" alt="Ícone de Login">
+        </button>
+    </header>
+    
+    <!-- Menu Mobile -->
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="inicial.html">Início</a></li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Robô Animado -->
+    <img src="dino.png" alt="Robot" class="robo2">
+    
+    <!-- Formulário de Cadastro -->
+    <section class="signup-container">
+        <h2>Criar Conta</h2>
+        <form id="signupForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="E-mail" class="input-box" required>
+                <span class="input-focus-effect"></span>
+            </div>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Nome de usuário" class="input-box" required>
+                <span class="input-focus-effect"></span>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Senha" class="input-box" required>
+                <span class="input-focus-effect"></span>
+                <button type="button" id="togglePassword" class="toggle-password">
+                    <i class="eye-icon"></i>
+                </button>
+            </div>
+            <div class="input-group">
+                <input type="password" id="confirm-password" placeholder="Confirmar senha" class="input-box" required>
+                <span class="input-focus-effect"></span>
+                <button type="button" id="toggleConfirmPassword" class="toggle-password">
+                    <i class="eye-icon"></i>
+                </button>
+            </div>
+            <button type="submit" class="signup-button">
+                <span>Cadastrar</span>
+                <div class="signup-button-effect"></div>
+            </button>
+        </form>
+        <div class="login-link">
+            Já tem uma conta? <a href="index.html">Faça login</a>
+        </div>
+    </section>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Referências aos elementos
+        const signupForm = document.getElementById("signupForm");
+        const emailInput = document.getElementById("email");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirm-password");
+        const signupButton = document.querySelector(".signup-button");
+        const togglePasswordBtn = document.getElementById("togglePassword");
+        const toggleConfirmPasswordBtn = document.getElementById("toggleConfirmPassword");
+        const menuToggle = document.querySelector(".menu-toggle");
+        const mobileNav = document.querySelector(".mobile-nav");
+        const robo = document.querySelector(".robo2");
+        
+        // Menu Mobile Toggle
+        if (menuToggle && mobileNav) {
+            menuToggle.addEventListener("click", function () {
+                mobileNav.style.display = mobileNav.style.display === "block" ? "none" : "block";
+            });
+        }
+        
+        // Efeito de foco nos inputs
+        const inputs = document.querySelectorAll(".input-box");
+        
+        inputs.forEach(input => {
+            // Adiciona classe quando o input está em foco
+            input.addEventListener("focus", function() {
+                this.parentElement.classList.add("input-focused");
+            });
+            
+            // Remove classe quando o foco sai do input, mas mantém se tiver valor
+            input.addEventListener("blur", function() {
+                if (this.value === "") {
+                    this.parentElement.classList.remove("input-focused");
+                }
+            });
+            
+            // Verifica se o input já tem valor ao carregar a página
+            if (input.value !== "") {
+                input.parentElement.classList.add("input-focused");
+            }
+        });
+        
+        // Mostrar/Esconder senha
+        if (togglePasswordBtn) {
+            togglePasswordBtn.addEventListener("click", function() {
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    this.classList.add("showing-password");
+                } else {
+                    passwordInput.type = "password";
+                    this.classList.remove("showing-password");
+                }
+            });
+        }
+        
+        // Mostrar/Esconder confirmação de senha
+        if (toggleConfirmPasswordBtn) {
+            toggleConfirmPasswordBtn.addEventListener("click", function() {
+                if (confirmPasswordInput.type === "password") {
+                    confirmPasswordInput.type = "text";
+                    this.classList.add("showing-password");
+                } else {
+                    confirmPasswordInput.type = "password";
+                    this.classList.remove("showing-password");
+                }
+            });
+        }
+        
+        // Efeito no botão de cadastro
+        if (signupButton) {
+            signupButton.addEventListener("mousemove", function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.style.setProperty("--x-pos", x + "px");
+                this.style.setProperty("--y-pos", y + "px");
+            });
+        }
+        
+        // Animação adicional para o robô
+        if (robo) {
+            robo.addEventListener("click", function() {
+                this.classList.add("wave");
+                setTimeout(() => {
+                    this.classList.remove("wave");
+                }, 1000);
+            });
+        }
+        
+        // Validação de formulário com efeito visual
+        if (signupForm) {
+            signupForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                const email = emailInput.value.trim();
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                
+                let isValid = true;
+                
+                // Limpar estados de erro anteriores
+                document.querySelectorAll(".input-group").forEach(group => {
+                    group.classList.remove("error");
+                });
+                
+                // Validações com feedback visual
+                if (!email) {
+                    emailInput.parentElement.classList.add("error");
+                    isValid = false;
+                } else if (!/\S+@\S+\.\S+/.test(email)) {
+                    emailInput.parentElement.classList.add("error");
+                    isValid = false;
+                }
+                
+                if (!username) {
+                    usernameInput.parentElement.classList.add("error");
+                    isValid = false;
+                }
+                
+                if (!password) {
+                    passwordInput.parentElement.classList.add("error");
+                    isValid = false;
+                } else if (password.length < 6) {
+                    passwordInput.parentElement.classList.add("error");
+                    isValid = false;
+                }
+                
+                if (!confirmPassword) {
+                    confirmPasswordInput.parentElement.classList.add("error");
+                    isValid = false;
+                } else if (password !== confirmPassword) {
+                    confirmPasswordInput.parentElement.classList.add("error");
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Adiciona classe de loading ao botão
+                    signupButton.classList.add("loading");
+                    
+                    // Simular processamento
+                    setTimeout(() => {
+                        signupButton.classList.remove("loading");
+                        signupButton.classList.add("success");
+                        
+                        // Armazenar dados temporariamente (apenas para demonstração)
+                        const userData = {
+                            email: email,
+                            username: username,
+                            password: password
+                        };
+                        
+                        localStorage.setItem('tempUserData', JSON.stringify(userData));
+                        
+                        // Redirecionar após animação
+                        setTimeout(() => {
+                            window.location.href = "inicial.html";
+                        }, 1000);
+                    }, 1500);
+                } else {
+                    // Animação de shake nos campos com erro
+                    document.querySelectorAll(".input-group.error").forEach(group => {
+                        setTimeout(() => {
+                            group.classList.remove("error");
+                        }, 500);
+                    });
+                }
+                
+                return false;
+            });
+        }
+    });
+    </script>
+</body>
+</html>

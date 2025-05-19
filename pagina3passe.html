@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="questoes3passe.css">
+  <title>Quiz Connect - Seleção de Matérias</title>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">Quiz Connect</div>
+    <nav>
+      <a href="inicial.html">Início</a>
+      <a href="cadastro.html">Cadastro</a>
+    </nav>
+    <div class="header-right">
+      <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+      <button class="login-btn" title="Login">
+        <img src="logo.png" alt="Ícone de Login">
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Escolha sua Área do Conhecimento para realizar a Prova</h1>
+    
+    <div class="cards-container">
+      <!-- Matemática - Ícone melhorado -->
+      <div class="card matematica" onclick="selecionarMateria('matematica', 'Matemática')">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="8" y1="12" x2="16" y2="12"></line>
+          <line x1="12" y1="8" x2="12" y2="16"></line>
+        </svg>
+        Matemática
+      </div>
+      
+      <!-- Ciências da Natureza - Ícone melhorado -->
+      <div class="card natureza" onclick="selecionarMateria('ciencias', 'Natureza')">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+          <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M7.38 12l5.74 9.94M9.69 16L3.95 6.06M14.31 16H2.83"></path>
+        </svg>
+        Natureza
+      </div>
+      
+      <!-- Ciências Humanas - Ícone melhorado -->
+      <div class="card humanas" onclick="selecionarMateria('historia', 'Humanas')">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+          <line x1="9" y1="7" x2="16" y2="7"></line>
+          <line x1="9" y1="11" x2="16" y2="11"></line>
+          <line x1="9" y1="15" x2="14" y2="15"></line>
+        </svg>
+        Humanas
+      </div>
+      
+      <!-- Linguagens - Ícone melhorado -->
+      <div class="card linguagens" onclick="selecionarMateria('portugues', 'Linguagens')">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          <line x1="9" y1="10" x2="15" y2="10"></line>
+          <line x1="12" y1="7" x2="12" y2="13"></line>
+        </svg>
+        Linguagens
+      </div>
+    </div>
+  </div>
+  
+  <!-- Tela de prova -->
+  <div class="prova-container" id="provaContainer">
+    <div class="prova-header">
+      <h2 id="provaTitulo">Prova</h2>
+      <button class="fechar-prova" onclick="fecharProva()">Fechar</button>
+    </div>
+    
+    <div class="questao-container">
+      <div class="questao" id="questaoAtual"></div>
+    </div>
+    
+    <div class="navegacao">
+      <button class="nav-button" id="btnAnterior" disabled>Anterior</button>
+      <button class="nav-button" id="btnProxima">Próxima</button>
+      <button class="nav-button" id="btnFinalizar" style="display: none;">Finalizar</button>
+    </div>
+    
+    <div class="progresso" id="progressoIndicador">
+      Questão <span id="questaoAtualNum">1</span> de <span id="totalQuestoes">8</span>
+    </div>
+    
+    <!-- Tela de Resultados -->
+    <div class="resultado-container" id="resultadoContainer">
+      <h2>Resultados</h2>
+      <div class="resultado-pontuacao">
+        <span id="acertosTotal">0</span>/<span id="totalQuestoesResultado">8</span>
+      </div>
+      <div class="resultado-detalhes" id="resultadoDetalhes">
+        <!-- Preenchido dinamicamente via JavaScript -->
+      </div>
+      <button class="btn-finalizar" onclick="fecharProva()">Voltar ao Início</button>
+      <button class="btn-tentar-novamente" onclick="tentarNovamente()">Tentar Novamente</button>
+    </div>
+  </div>
+  <script src="questoes3passe.js"></script>
+</body>
+</html>

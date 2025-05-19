@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="questoes3saep.css">
+  <title>Quiz Connect - Seleção de Matérias</title>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">Quiz Connect</div>
+    <nav>
+      <a href="inicial.html">Início</a>
+      <a href="cadastro.html">Cadastro</a>
+    </nav>
+    <div class="header-right">
+      <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+      <button class="login-btn" title="Login">
+        <img src="logo.png" alt="Ícone de Login">
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Prova SAEP</h1>
+    
+    <div class="cards-container">
+  <div class="card matematica" onclick="selecionarMateria('matematica', 'Matemática')">
+    <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Formato de prova/documento -->
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+      
+      <!-- Linhas de texto -->
+      <line x1="8" y1="12" x2="16" y2="12"></line>
+      <line x1="8" y1="16" x2="16" y2="16"></line>
+      <line x1="8" y1="8" x2="12" y2="8"></line>
+      
+      <!-- Caneta/lápis -->
+      <path d="M14 2v6h6"></path>
+      <path d="M16 17l2 2 4-4"></path>
+    </svg>
+    COMEÇAR
+  </div>
+</div>
+  
+  <!-- Tela de prova -->
+  <div class="prova-container" id="provaContainer">
+    <div class="prova-header">
+      <h2 id="provaTitulo">Prova</h2>
+      <button class="fechar-prova" onclick="fecharProva()">Fechar</button>
+    </div>
+    
+    <div class="questao-container">
+      <div class="questao" id="questaoAtual"></div>
+    </div>
+    
+    <div class="navegacao">
+      <button class="nav-button" id="btnAnterior" disabled>Anterior</button>
+      <button class="nav-button" id="btnProxima">Próxima</button>
+      <button class="nav-button" id="btnFinalizar" style="display: none;">Finalizar</button>
+    </div>
+    
+    <div class="progresso" id="progressoIndicador">
+      Questão <span id="questaoAtualNum">1</span> de <span id="totalQuestoes">8</span>
+    </div>
+    
+    <!-- Tela de Resultados -->
+    <div class="resultado-container" id="resultadoContainer">
+      <h2>Resultados</h2>
+      <div class="resultado-pontuacao">
+        <span id="acertosTotal">0</span>/<span id="totalQuestoesResultado">8</span>
+      </div>
+      <div class="resultado-detalhes" id="resultadoDetalhes">
+        <!-- Preenchido dinamicamente via JavaScript -->
+      </div>
+      <button class="btn-finalizar" onclick="fecharProva()">Voltar ao Início</button>
+      <button class="btn-tentar-novamente" onclick="tentarNovamente()">Tentar Novamente</button>
+    </div>
+  </div>
+  <script src="questoes3saep.js"></script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Connect - Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Nuvens Decorativas -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Quiz Connect</div>
+        <nav>
+            <ul>
+                <li><a href="#">Turma</a></li>
+                <li><a href="#">3DS</a></li>
+            </ul>
+        </nav>
+        <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+        <button class="login-btn" title="Login">
+            <img src="logo.png" alt="Ícone de Login">
+        </button>
+    </header>
+    
+    <!-- Robô Animado -->
+    <img src="dino.png" alt="Robot" class="robo2">
+
+    <!-- Formulário de Login -->
+    <section class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Usuário" class="input-box" required>
+                <span class="input-focus-effect"></span>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Senha" class="input-box" required>
+                <span class="input-focus-effect"></span>
+                <button type="button" id="togglePassword" class="toggle-password">
+                    <i class="eye-icon"></i>
+                </button>
+            </div>
+            
+            <button type="submit" class="login-button">
+                <span>Continuar</span>
+                <div class="login-button-effect"></div>
+            </button>
+        </form>
+        <p>Sem conta? <a href="cadastro.html" class="signup-link">Clique aqui!</a></p>
+    </section>
+    
+    <script>
+    // Espera o DOM carregar completamente
+    document.addEventListener("DOMContentLoaded", function() {
+        // Referências aos elementos
+        const loginForm = document.getElementById("loginForm");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const loginButton = document.querySelector(".login-button");
+        const togglePasswordBtn = document.getElementById("togglePassword");
+        
+        // Efeito de foco nos inputs
+        const inputs = document.querySelectorAll(".input-box");
+        
+        inputs.forEach(input => {
+            // Adiciona classe quando o input está em foco
+            input.addEventListener("focus", function() {
+                this.parentElement.classList.add("input-focused");
+            });
+            
+            // Remove classe quando o foco sai do input, mas mantém se tiver valor
+            input.addEventListener("blur", function() {
+                if (this.value === "") {
+                    this.parentElement.classList.remove("input-focused");
+                }
+            });
+            
+            // Verifica se o input já tem valor ao carregar a página
+            if (input.value !== "") {
+                input.parentElement.classList.add("input-focused");
+            }
+        });
+        
+        // Mostrar/Esconder senha
+        if (togglePasswordBtn) {
+            togglePasswordBtn.addEventListener("click", function() {
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    this.classList.add("showing-password");
+                } else {
+                    passwordInput.type = "password";
+                    this.classList.remove("showing-password");
+                }
+            });
+        }
+        
+        // Efeito no botão de login
+        if (loginButton) {
+            loginButton.addEventListener("mousemove", function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.style.setProperty("--x-pos", x + "px");
+                this.style.setProperty("--y-pos", y + "px");
+            });
+        }
+        
+        // Validação de formulário com efeito visual
+        if (loginForm) {
+            loginForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+                
+                if(username && password) {
+                    // Adiciona classe de loading ao botão
+                    loginButton.classList.add("loading");
+                    
+                    // Simulação de processamento
+                    setTimeout(() => {
+                        loginButton.classList.remove("loading");
+                        loginButton.classList.add("success");
+                        
+                        // Redireciona após animação
+                        setTimeout(() => {
+                            window.location.href = "inicial.html";
+                        }, 1000);
+                    }, 1500);
+                    
+                    return false;
+                } else {
+                    // Destaca os campos vazios com efeito de shake
+                    if (!username) {
+                        usernameInput.parentElement.classList.add("error");
+                        setTimeout(() => {
+                            usernameInput.parentElement.classList.remove("error");
+                        }, 500);
+                    }
+                    
+                    if (!password) {
+                        passwordInput.parentElement.classList.add("error");
+                        setTimeout(() => {
+                            passwordInput.parentElement.classList.remove("error");
+                        }, 500);
+                    }
+                }
+            });
+        }
+        
+        // Animação adicional para o robô
+        const robo = document.querySelector(".robo2");
+        if (robo) {
+            robo.addEventListener("click", function() {
+                this.classList.add("wave");
+                setTimeout(() => {
+                    this.classList.remove("wave");
+                }, 1000);
+            });
+        }
+    });
+</script>
+</body>
+</html>
