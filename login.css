@@ -82,8 +82,12 @@ header {
 }
 
 nav ul {
-    display: flex;
+   display: flex;
+    font-size: 19px;
     list-style: none;
+    position: absolute;
+    left: 270px;
+    top: 30px;
 }
 
 nav ul li {

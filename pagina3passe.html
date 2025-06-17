@@ -16,6 +16,38 @@
     </nav>
     <div class="header-right">
       <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+      
+   <!-- Container de acessibilidade -->
+      <div class="accessibility-container">
+        <!-- Botão de Acessibilidade -->
+        <div style="position: relative;">
+          <button class="accessibility-btn" id="accessibilityBtn" title="Ativar/Desativar Leitura de Tela">
+            🔊
+          </button>
+          
+          <!-- Controles de Acessibilidade -->
+          <div class="accessibility-controls" id="accessibilityControls">
+            <div class="control-group">
+              <label>Velocidade:</label>
+              <input type="range" class="control-slider" id="speedControl" min="0.5" max="2" step="0.1" value="1">
+              <span id="speedValue">1x</span>
+            </div>
+            
+            <div class="control-group">
+              <label>Volume:</label>
+              <input type="range" class="control-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
+              <span id="volumeValue">100%</span>
+            </div>
+            
+            <div class="control-group">
+              <button class="control-btn" id="pauseBtn">⏸️ Pausar</button>
+              <button class="control-btn" id="stopBtn">⏹️ Parar</button>
+              <button class="control-btn" id="skipBtn">⏭️ Pular</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <button class="login-btn" title="Login">
         <img src="logo.png" alt="Ícone de Login">
       </button>
@@ -103,6 +135,7 @@
       <button class="btn-tentar-novamente" onclick="tentarNovamente()">Tentar Novamente</button>
     </div>
   </div>
+  
   <script src="questoes3passe.js"></script>
 </body>
 </html>

@@ -1,210 +1,498 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Quiz Connect</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="inicial.css" rel="stylesheet">
-</head>
-<body>
-  <header>
-    <div class="logo">Quiz Connect</div>
-    <nav>
-      <ul>
-        <li><a href="#">Início</a></li>
-        <li><a href="cadastro.html">Cadastro</a></li>
-      </ul>
-    </nav>
-    <img  src="sesi-logo.png" c="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
-    <!-- Botão de Login -->
-    <button class="login-btn" title="Login">
-      <img src="logo.png" alt="Ícone de Login">
-    </button>
-  </header>
-  
-  <div class="container">
-    <!-- Nuvens decorativas -->
-    <div class="cloud cloud1"></div>
-    <div class="cloud cloud2"></div>
-    
-    <!-- Animação Lottie -->
-    <div class="lottie-container">
-      <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
-      <dotlottie-player
-        src="https://lottie.host/3683f09f-c06e-486e-8505-61604f951860/kTkXHyqx7w.lottie"
-        background="transparent"
-        speed="1"
-        style="width: 300px; height: 300px"
-        loop
-        autoplay>
-      </dotlottie-player>
-    </div>
-    
-    <div class="content-wrapper">
-      <!-- Painel esquerdo -->
-      <div class="left-panel panel">
-        <h2>Por que nosso site é Funcional?</h2>
-        <p>
-          É um site de provas simplificado para pessoas com D.I e T.E.A,
-          oferecendo um ambiente acessível, seguro e personalizado.
-          Permite o aprendizado no próprio ritmo, promovendo o
-          desenvolvimento cognitivo e a autonomia, tornando o processo
-          educacional mais inclusivo e eficaz.
-        </p>
-        <button class="info-btn">Saiba Mais</button>
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Quiz Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="inicial.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="logo">Quiz Connect</div>
+      <nav>
+        <ul>
+          <li><a href="#">Início</a></li>
+          <li><a href="cadastro.html">Cadastro</a></li>
+        </ul>
+      </nav>
+      
+      <div class="accessibility-container">
+        <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+        
+        <div style="position: relative;">
+          <button class="accessibility-btn" id="accessibilityBtn" title="Ativar/Desativar Leitura de Tela">
+            🔊
+          </button>
+          
+          <div class="accessibility-controls" id="accessibilityControls">
+            <div class="control-group">
+              <label>Velocidade:</label>
+              <input type="range" class="control-slider" id="speedControl" min="0.5" max="2" step="0.1" value="1">
+              <span id="speedValue">1x</span>
+            </div>
+            
+            <div class="control-group">
+              <label>Volume:</label>
+              <input type="range" class="control-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
+              <span id="volumeValue">100%</span>
+            </div>
+            
+            <div class="control-group">
+              <button class="control-btn" id="pauseBtn">⏸️ Pausar</button>
+              <button class="control-btn" id="stopBtn">⏹️ Parar</button>
+              <button class="control-btn" id="skipBtn">⏭️ Pular</button>
+            </div>
+          </div>
+        </div>
       </div>
       
-      <!-- Painel direito -->
-      <div class="right-panel panel">
-        <div class="question-icon"></div>
-        <div class="buttons-area">
-          <h1>Escolha sua turma</h1>
-          
-          <button class="quiz-btn" type="button" onclick="window.location.href='pagina9passe.html'">9º ano Passe</button>
-          
-          <button class="quiz-btn" type="button" onclick="window.location.href='pagina3passe.html'">3º ano Passe</button>
-          
-          <button class="quiz-btn" type="button" onclick="window.location.href='pagina.html'">3º ano saep</button>
+      <button class="login-btn" title="Login">
+        <img src="logo.png" alt="Ícone de Login">
+      </button>
+    </header>
+    
+    <div class="container">
+      <div class="cloud cloud1"></div>
+      <div class="cloud cloud2"></div>
+      
+      <div class="lottie-container">
+        <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+        <dotlottie-player
+          src="https://lottie.host/3683f09f-c06e-486e-8505-61604f951860/kTkXHyqx7w.lottie"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          loop
+          autoplay>
+        </dotlottie-player>
+      </div>
+      
+      <div class="content-wrapper">
+        <div class="left-panel panel">
+          <h2>Por que nosso site é Funcional?</h2>
+          <p>
+            É um site de provas simplificado para pessoas com D.I e T.E.A,
+            oferecendo um ambiente acessível, seguro e personalizado.
+            Permite o aprendizado no próprio ritmo, promovendo o
+            desenvolvimento cognitivo e a autonomia, tornando o processo
+            educacional mais inclusivo e eficaz.
+          </p>
+          <button class="info-btn">Saiba Mais</button>
+        </div>
+        
+        <div class="right-panel panel">
+          <div class="question-icon"></div>
+          <div class="buttons-area">
+            <h1>Escolha sua turma</h1>
+            
+            <button class="quiz-btn" type="button" onclick="window.location.href='pagina9passe.html'">9º ano Passe</button>
+            
+            <button class="quiz-btn" type="button" onclick="window.location.href='pagina3passe.html'">3º ano Passe</button>
+            
+            <button class="quiz-btn" type="button" onclick="window.location.href='pagina.html'">3º ano saep</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    // Função para o botão Saiba Mais
-    document.querySelector('.info-btn').addEventListener('click', () => {
-      // Criando um modal personalizado em vez de usar alert
-      const modal = document.createElement('div');
-      modal.style.position = 'fixed';
-      modal.style.top = '0';
-      modal.style.left = '0';
-      modal.style.width = '100%';
-      modal.style.height = '100%';
-      modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
-      modal.style.display = 'flex';
-      modal.style.justifyContent = 'center';
-      modal.style.alignItems = 'center';
-      modal.style.zIndex = '1000';
-      modal.style.opacity = '0';
-      modal.style.transition = 'opacity 0.3s ease';
-      
-      const modalContent = document.createElement('div');
-      modalContent.style.backgroundColor = 'white';
-      modalContent.style.padding = '2rem';
-      modalContent.style.borderRadius = '1rem';
-      modalContent.style.maxWidth = '500px';
-      modalContent.style.width = '90%';
-      modalContent.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
-      modalContent.style.transform = 'translateY(20px)';
-      modalContent.style.transition = 'transform 0.3s ease';
-      
-      const closeBtn = document.createElement('button');
-      closeBtn.textContent = '×';
-      closeBtn.style.position = 'absolute';
-      closeBtn.style.top = '1rem';
-      closeBtn.style.right = '1rem';
-      closeBtn.style.background = 'none';
-      closeBtn.style.border = 'none';
-      closeBtn.style.fontSize = '1.5rem';
-      closeBtn.style.cursor = 'pointer';
-      closeBtn.style.color = '#666';
-      
-      const title = document.createElement('h3');
-      title.textContent = 'Nossa Missão';
-      title.style.marginBottom = '1rem';
-      title.style.color = '#333';
-      
-      const message = document.createElement('p');
-      message.textContent = 'Com ferramentas adaptáveis, promovemos desenvolvimento cognitivo, autonomia e inclusão, tornando a educação mais eficaz e acolhedora. Simplificar para incluir, adaptar para evoluir!';
-      message.style.lineHeight = '1.6';
-      message.style.color = '#666';
-      
-      modalContent.appendChild(closeBtn);
-      modalContent.appendChild(title);
-      modalContent.appendChild(message);
-      modal.appendChild(modalContent);
-      document.body.appendChild(modal);
-      
-      // Animar entrada do modal
-      setTimeout(() => {
-        modal.style.opacity = '1';
-        modalContent.style.transform = 'translateY(0)';
-      }, 10);
-      
-      closeBtn.addEventListener('click', () => {
-        modal.style.opacity = '0';
-        modalContent.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-          document.body.removeChild(modal);
-        }, 300);
-      });
-      
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.style.opacity = '0';
-          modalContent.style.transform = 'translateY(20px)';
-          setTimeout(() => {
-            document.body.removeChild(modal);
-          }, 300);
+    <script>
+      class ScreenReader {
+        constructor() {
+          this.synth = window.speechSynthesis;
+          this.isReading = false;
+          this.isPaused = false;
+          this.currentUtterance = null;
+          this.queue = [];
+          this.currentIndex = 0;
+          this.speed = 1;
+          this.volume = 1;
+          this.voice = null;
+          this.uniqueContent = new Set();
+          
+          this.initializeVoices();
+          this.bindEvents();
         }
-      });
-    });
-    
-    // Adicionando efeitos hover avançados aos botões de quiz
-    document.querySelectorAll('.quiz-btn').forEach(btn => {
-      btn.addEventListener('mouseover', () => {
-        btn.style.transition = 'all 0.3s ease';
-      });
-      
-      btn.addEventListener('click', (e) => {
-        // Efeito de ripple ao clicar
-        const ripple = document.createElement('span');
-        ripple.style.position = 'absolute';
-        ripple.style.borderRadius = '50%';
-        ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
-        ripple.style.width = '100px';
-        ripple.style.height = '100px';
-        ripple.style.transform = 'scale(0)';
-        ripple.style.animation = 'ripple 0.6s linear';
-        ripple.style.left = e.clientX - btn.getBoundingClientRect().left - 50 + 'px';
-        ripple.style.top = e.clientY - btn.getBoundingClientRect().top - 50 + 'px';
         
-        btn.appendChild(ripple);
+        initializeVoices() {
+          const setVoice = () => {
+            const voices = this.synth.getVoices();
+            this.voice = voices.find(voice => 
+              voice.lang.startsWith('pt') || 
+              voice.name.toLowerCase().includes('portuguese')
+            ) || voices[0];
+          };
+          
+          if (this.synth.getVoices().length > 0) {
+            setVoice();
+          } else {
+            this.synth.addEventListener('voiceschanged', setVoice);
+          }
+        }
         
-        setTimeout(() => {
-          btn.removeChild(ripple);
-        }, 600);
+        bindEvents() {
+          const btn = document.getElementById('accessibilityBtn');
+          const controls = document.getElementById('accessibilityControls');
+          const speedControl = document.getElementById('speedControl');
+          const volumeControl = document.getElementById('volumeControl');
+          const speedValue = document.getElementById('speedValue');
+          const volumeValue = document.getElementById('volumeValue');
+          const pauseBtn = document.getElementById('pauseBtn');
+          const stopBtn = document.getElementById('stopBtn');
+          const skipBtn = document.getElementById('skipBtn');
+          
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleReading();
+          });
+          
+          btn.addEventListener('mouseenter', () => {
+            if (this.isReading) {
+              controls.classList.add('show');
+            }
+          });
+          
+          controls.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+              if (!controls.matches(':hover')) {
+                controls.classList.remove('show');
+              }
+            }, 300);
+          });
+          
+          speedControl.addEventListener('input', (e) => {
+            this.speed = parseFloat(e.target.value);
+            speedValue.textContent = this.speed + 'x';
+            if (this.currentUtterance) {
+              this.currentUtterance.rate = this.speed;
+            }
+          });
+          
+          volumeControl.addEventListener('input', (e) => {
+            this.volume = parseFloat(e.target.value);
+            volumeValue.textContent = Math.round(this.volume * 100) + '%';
+            if (this.currentUtterance) {
+              this.currentUtterance.volume = this.volume;
+            }
+          });
+          
+          pauseBtn.addEventListener('click', () => this.togglePause());
+          stopBtn.addEventListener('click', () => this.stopReading());
+          skipBtn.addEventListener('click', () => this.skipCurrent());
+          
+          document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !controls.contains(e.target)) {
+              controls.classList.remove('show');
+            }
+          });
+        }
         
-        // Navegar para a página específica
-        setTimeout(() => {
-          window.location.href = btn.getAttribute('onclick').split("'")[1];
-        }, 200);
-      });
-    });
-    
-    // Função para o botão de login com animação
-    document.querySelector('.login-btn').addEventListener('click', () => {
-      const btn = document.querySelector('.login-btn');
-      btn.style.transform = 'scale(0.95)';
-      
-      setTimeout(() => {
-        btn.style.transform = 'scale(1)';
-        window.location.href = '/PaginaLogin/login.html';
-      }, 150);
-    });
-    
-    // Adicionar estilos de animação
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes ripple {
-        to {
-          transform: scale(4);
-          opacity: 0;
+        getReadableContent() {
+          const content = [];
+          this.uniqueContent.clear();
+          
+          const addContent = (text, selector) => {
+            const key = selector + text;
+            if (!this.uniqueContent.has(key)) {
+              this.uniqueContent.add(key);
+              content.push({ text, element: selector });
+            }
+          };
+          
+          // Conteúdo principal
+          addContent('Página: ' + document.title, null);
+          addContent('Site Quiz Connect', '.logo');
+          addContent('Menu de navegação com opções: Início e Cadastro', 'nav');
+          
+          // Painel esquerdo
+          addContent('Painel esquerdo: Por que nosso site é Funcional?', '.left-panel h2');
+          addContent('Descrição: ' + document.querySelector('.left-panel p').textContent.trim(), '.left-panel p');
+          addContent('Botão Saiba Mais', '.info-btn');
+          
+          // Painel direito - corrigido para não duplicar
+          const rightPanel = document.querySelector('.right-panel');
+          if (rightPanel) {
+            const title = rightPanel.querySelector('h1');
+            if (title) {
+              addContent(title.textContent.trim(), '.right-panel h1');
+            }
+            
+            // Botões de turma
+            const buttons = rightPanel.querySelectorAll('.quiz-btn');
+            buttons.forEach((btn, index) => {
+              addContent('Opção: ' + btn.textContent.trim(), `.quiz-btn:nth-child(${index + 2})`);
+            });
+          }
+          
+          addContent('Página desenvolvida com recursos de acessibilidade', null);
+          addContent('Use os controles de velocidade e volume para personalizar a leitura', null);
+          
+          return content;
+        }
+        
+        toggleReading() {
+          if (this.isReading) {
+            this.stopReading();
+          } else {
+            this.startReading();
+          }
+        }
+        
+        startReading() {
+          this.queue = this.getReadableContent();
+          this.currentIndex = 0;
+          this.isReading = true;
+          this.isPaused = false;
+          
+          const btn = document.getElementById('accessibilityBtn');
+          const controls = document.getElementById('accessibilityControls');
+          
+          btn.classList.add('active');
+          btn.innerHTML = '🔊';
+          btn.title = 'Leitura ativa - Clique para parar';
+          controls.classList.add('show');
+          
+          this.readNext();
+        }
+        
+        readNext() {
+          if (this.currentIndex >= this.queue.length) {
+            this.stopReading();
+            return;
+          }
+          
+          const currentItem = this.queue[this.currentIndex];
+          const text = currentItem.text;
+          this.currentUtterance = new SpeechSynthesisUtterance(text);
+          
+          if (this.voice) {
+            this.currentUtterance.voice = this.voice;
+          }
+          this.currentUtterance.rate = this.speed;
+          this.currentUtterance.volume = this.volume;
+          this.currentUtterance.pitch = 1;
+          this.currentUtterance.lang = 'pt-BR';
+          
+          this.highlightCurrentElement();
+          
+          this.currentUtterance.onend = () => {
+            this.currentIndex++;
+            if (this.isReading && !this.isPaused) {
+              setTimeout(() => this.readNext(), 500);
+            }
+          };
+          
+          this.currentUtterance.onerror = (e) => {
+            console.warn('Erro na síntese de voz:', e);
+            this.currentIndex++;
+            if (this.isReading) {
+              this.readNext();
+            }
+          };
+          
+          this.synth.speak(this.currentUtterance);
+        }
+        
+        highlightCurrentElement() {
+          document.querySelectorAll('.reading-highlight').forEach(el => {
+            el.classList.remove('reading-highlight');
+          });
+          
+          const currentItem = this.queue[this.currentIndex];
+          if (currentItem && currentItem.element) {
+            const element = document.querySelector(currentItem.element);
+            if (element) {
+              element.classList.add('reading-highlight');
+              element.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+              });
+            }
+          }
+        }
+        
+        togglePause() {
+          const pauseBtn = document.getElementById('pauseBtn');
+          const btn = document.getElementById('accessibilityBtn');
+          
+          if (this.isPaused) {
+            this.synth.resume();
+            this.isPaused = false;
+            pauseBtn.innerHTML = '⏸️ Pausar';
+            btn.classList.remove('paused');
+            btn.classList.add('active');
+          } else {
+            this.synth.pause();
+            this.isPaused = true;
+            pauseBtn.innerHTML = '▶️ Continuar';
+            btn.classList.remove('active');
+            btn.classList.add('paused');
+          }
+        }
+        
+        stopReading() {
+          this.synth.cancel();
+          this.isReading = false;
+          this.isPaused = false;
+          this.currentIndex = 0;
+          
+          const btn = document.getElementById('accessibilityBtn');
+          const controls = document.getElementById('accessibilityControls');
+          const pauseBtn = document.getElementById('pauseBtn');
+          
+          btn.classList.remove('active', 'paused');
+          btn.innerHTML = '🔊';
+          btn.title = 'Ativar leitura de tela';
+          controls.classList.remove('show');
+          pauseBtn.innerHTML = '⏸️ Pausar';
+          
+          document.querySelectorAll('.reading-highlight').forEach(el => {
+            el.classList.remove('reading-highlight');
+          });
+        }
+        
+        skipCurrent() {
+          if (this.isReading) {
+            this.synth.cancel();
+            this.currentIndex++;
+            if (this.currentIndex < this.queue.length) {
+              setTimeout(() => this.readNext(), 200);
+            } else {
+              this.stopReading();
+            }
+          }
         }
       }
-    `;
-    document.head.appendChild(style);
-  </script>
-</body>
-</html>
+
+      document.addEventListener("DOMContentLoaded", function() {
+        const screenReader = new ScreenReader();
+        
+        document.querySelector('.info-btn').addEventListener('click', () => {
+          const modal = document.createElement('div');
+          modal.style.position = 'fixed';
+          modal.style.top = '0';
+          modal.style.left = '0';
+          modal.style.width = '100%';
+          modal.style.height = '100%';
+          modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+          modal.style.display = 'flex';
+          modal.style.justifyContent = 'center';
+          modal.style.alignItems = 'center';
+          modal.style.zIndex = '1000';
+          modal.style.opacity = '0';
+          modal.style.transition = 'opacity 0.3s ease';
+          
+          const modalContent = document.createElement('div');
+          modalContent.style.backgroundColor = 'white';
+          modalContent.style.padding = '2rem';
+          modalContent.style.borderRadius = '1rem';
+          modalContent.style.maxWidth = '500px';
+          modalContent.style.width = '90%';
+          modalContent.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+          modalContent.style.transform = 'translateY(20px)';
+          modalContent.style.transition = 'transform 0.3s ease';
+          
+          const closeBtn = document.createElement('button');
+          closeBtn.textContent = '×';
+          closeBtn.style.position = 'absolute';
+          closeBtn.style.top = '1rem';
+          closeBtn.style.right = '1rem';
+          closeBtn.style.background = 'none';
+          closeBtn.style.border = 'none';
+          closeBtn.style.fontSize = '1.5rem';
+          closeBtn.style.cursor = 'pointer';
+          closeBtn.style.color = '#666';
+          
+          const title = document.createElement('h3');
+          title.textContent = 'Nossa Missão';
+          title.style.marginBottom = '1rem';
+          title.style.color = '#333';
+          
+          const message = document.createElement('p');
+          message.textContent = 'Com ferramentas adaptáveis, promovemos desenvolvimento cognitivo, autonomia e inclusão, tornando a educação mais eficaz e acolhedora. Simplificar para incluir, adaptar para evoluir!';
+          message.style.lineHeight = '1.6';
+          message.style.color = '#666';
+          
+          modalContent.appendChild(closeBtn);
+          modalContent.appendChild(title);
+          modalContent.appendChild(message);
+          modal.appendChild(modalContent);
+          document.body.appendChild(modal);
+          
+          setTimeout(() => {
+            modal.style.opacity = '1';
+            modalContent.style.transform = 'translateY(0)';
+          }, 10);
+          
+          closeBtn.addEventListener('click', () => {
+            modal.style.opacity = '0';
+            modalContent.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+              document.body.removeChild(modal);
+            }, 300);
+          });
+          
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              modal.style.opacity = '0';
+              modalContent.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                document.body.removeChild(modal);
+              }, 300);
+            }
+          });
+        });
+        
+        document.querySelectorAll('.quiz-btn').forEach(btn => {
+          btn.addEventListener('mouseover', () => {
+            btn.style.transition = 'all 0.3s ease';
+          });
+          
+          btn.addEventListener('click', (e) => {
+            const ripple = document.createElement('span');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+            ripple.style.width = '100px';
+            ripple.style.height = '100px';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.left = e.clientX - btn.getBoundingClientRect().left - 50 + 'px';
+            ripple.style.top = e.clientY - btn.getBoundingClientRect().top - 50 + 'px';
+            
+            btn.appendChild(ripple);
+            
+            setTimeout(() => {
+              btn.removeChild(ripple);
+            }, 600);
+            
+            setTimeout(() => {
+              window.location.href = btn.getAttribute('onclick').split("'")[1];
+            }, 200);
+          });
+        });
+        
+        document.querySelector('.login-btn').addEventListener('click', () => {
+          const btn = document.querySelector('.login-btn');
+          btn.style.transform = 'scale(0.95)';
+          
+          setTimeout(() => {
+            btn.style.transform = 'scale(1)';
+            window.location.href = '/PaginaLogin/login.html';
+          }, 150);
+        });
+        
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes ripple {
+            to {
+              transform: scale(4);
+              opacity: 0;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+      });
+    </script>
+  </body>
+  </html>

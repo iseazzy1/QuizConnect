@@ -8,6 +8,159 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos para o botão de acessibilidade */
+        .accessibility-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            left: 460px
+        }
+
+        .accessibility-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accessibility-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .accessibility-btn.active {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            animation: pulse 1.5s infinite;
+        }
+
+        .accessibility-btn.paused {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+
+        .accessibility-controls {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 200px;
+            z-index: 1000;
+        }
+
+        .accessibility-controls.show {
+            display: flex;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group label {
+            font-size: 12px;
+            color: #666;
+            min-width: 70px;
+        }
+
+        .control-slider {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: #ddd;
+            outline: none;
+        }
+
+        .control-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+        }
+
+        .control-btn {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            background: #e9ecef;
+        }
+
+        .control-btn.active {
+            background: #007bff;
+            color: white;
+        }
+
+        /* Highlight para texto sendo lido */
+        .reading-highlight {
+            background-color: #fff3cd !important;
+            border: 2px solid #ffc107 !important;
+            border-radius: 3px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* Tooltip */
+        .accessibility-btn::before {
+            content: 'Clique para ativar leitura de tela';
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .accessibility-btn:hover::before {
+            opacity: 1;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .accessibility-controls {
+                right: -100px;
+                min-width: 180px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Nuvens Decorativas -->
@@ -24,7 +177,40 @@
                 <li><a href="#">3DS</a></li>
             </ul>
         </nav>
-        <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+        
+        <!-- Container com logo SESI e botão de acessibilidade -->
+        <div class="accessibility-container">
+            <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+            
+            <!-- Botão de Acessibilidade -->
+            <div style="position: relative;">
+                <button class="accessibility-btn" id="accessibilityBtn" title="Ativar/Desativar Leitura de Tela">
+                    🔊
+                </button>
+                
+                <!-- Controles de Acessibilidade -->
+                <div class="accessibility-controls" id="accessibilityControls">
+                    <div class="control-group">
+                        <label>Velocidade:</label>
+                        <input type="range" class="control-slider" id="speedControl" min="0.5" max="2" step="0.1" value="1">
+                        <span id="speedValue">1x</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Volume:</label>
+                        <input type="range" class="control-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
+                        <span id="volumeValue">100%</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button class="control-btn" id="pauseBtn">⏸️ Pausar</button>
+                        <button class="control-btn" id="stopBtn">⏹️ Parar</button>
+                        <button class="control-btn" id="skipBtn">⏭️ Pular</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <button class="login-btn" title="Login">
             <img src="logo.png" alt="Ícone de Login">
         </button>
@@ -59,115 +245,378 @@
     </section>
     
     <script>
-    // Espera o DOM carregar completamente
-    document.addEventListener("DOMContentLoaded", function() {
-        // Referências aos elementos
-        const loginForm = document.getElementById("loginForm");
-        const usernameInput = document.getElementById("username");
-        const passwordInput = document.getElementById("password");
-        const loginButton = document.querySelector(".login-button");
-        const togglePasswordBtn = document.getElementById("togglePassword");
+    // Classe única e completa para gerenciar a acessibilidade
+class ScreenReader {
+    constructor() {
+        this.synth = window.speechSynthesis;
+        this.isReading = false;
+        this.isPaused = false;
+        this.currentUtterance = null;
+        this.queue = [];
+        this.currentIndex = 0;
+        this.speed = 1;
+        this.volume = 1;
+        this.voice = null;
+        this.addedElements = new Set();
         
-        // Efeito de foco nos inputs
-        const inputs = document.querySelectorAll(".input-box");
+        this.initializeVoices();
+        this.bindEvents();
+    }
+    
+    initializeVoices() {
+        const setVoice = () => {
+            const voices = this.synth.getVoices();
+            this.voice = voices.find(voice => 
+                voice.lang.startsWith('pt') || 
+                voice.name.toLowerCase().includes('portuguese')
+            ) || voices[0];
+        };
         
-        inputs.forEach(input => {
-            // Adiciona classe quando o input está em foco
-            input.addEventListener("focus", function() {
-                this.parentElement.classList.add("input-focused");
-            });
-            
-            // Remove classe quando o foco sai do input, mas mantém se tiver valor
-            input.addEventListener("blur", function() {
-                if (this.value === "") {
-                    this.parentElement.classList.remove("input-focused");
-                }
-            });
-            
-            // Verifica se o input já tem valor ao carregar a página
-            if (input.value !== "") {
-                input.parentElement.classList.add("input-focused");
+        if (this.synth.getVoices().length > 0) {
+            setVoice();
+        } else {
+            this.synth.addEventListener('voiceschanged', setVoice);
+        }
+    }
+    
+    bindEvents() {
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        const speedControl = document.getElementById('speedControl');
+        const volumeControl = document.getElementById('volumeControl');
+        const speedValue = document.getElementById('speedValue');
+        const volumeValue = document.getElementById('volumeValue');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleReading();
+        });
+        
+        btn.addEventListener('mouseenter', () => {
+            if (this.isReading) {
+                controls.classList.add('show');
             }
         });
         
-        // Mostrar/Esconder senha
-        if (togglePasswordBtn) {
-            togglePasswordBtn.addEventListener("click", function() {
-                if (passwordInput.type === "password") {
-                    passwordInput.type = "text";
-                    this.classList.add("showing-password");
-                } else {
-                    passwordInput.type = "password";
-                    this.classList.remove("showing-password");
+        controls.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+                if (!controls.matches(':hover')) {
+                    controls.classList.remove('show');
                 }
-            });
+            }, 300);
+        });
+        
+        speedControl.addEventListener('input', (e) => {
+            this.speed = parseFloat(e.target.value);
+            speedValue.textContent = this.speed + 'x';
+            if (this.currentUtterance) {
+                this.currentUtterance.rate = this.speed;
+            }
+        });
+        
+        volumeControl.addEventListener('input', (e) => {
+            this.volume = parseFloat(e.target.value);
+            volumeValue.textContent = Math.round(this.volume * 100) + '%';
+            if (this.currentUtterance) {
+                this.currentUtterance.volume = this.volume;
+            }
+        });
+        
+        pauseBtn.addEventListener('click', () => this.togglePause());
+        stopBtn.addEventListener('click', () => this.stopReading());
+        skipBtn.addEventListener('click', () => this.skipCurrent());
+        
+        document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !controls.contains(e.target)) {
+                controls.classList.remove('show');
+            }
+        });
+    }
+    
+    getReadableContent() {
+        const content = [];
+        this.addedElements.clear();
+
+        const addContent = (text, selector) => {
+            const key = selector + text;
+            if (!this.addedElements.has(key)) {
+                content.push({ text, element: selector });
+                this.addedElements.add(key);
+            }
+        };
+
+        // Conteúdo principal
+        addContent('Página: ' + document.title, null);
+        addContent('Site Quiz Connect', '.logo');
+        
+        // Menu de navegação - leitura única e simplificada
+        const navLinks = document.querySelectorAll('nav ul li a');
+        if (navLinks.length > 0) {
+            const menuItems = Array.from(navLinks).map(link => link.textContent.trim()).join(' e ');
+            addContent('Menu de navegação: ' + menuItems, 'nav');
         }
         
-        // Efeito no botão de login
-        if (loginButton) {
-            loginButton.addEventListener("mousemove", function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                this.style.setProperty("--x-pos", x + "px");
-                this.style.setProperty("--y-pos", y + "px");
-            });
+        // Formulário de login
+        const loginContainer = document.querySelector('.login-container');
+        if (loginContainer) {
+            addContent('Formulário de Login', '.login-container h2');
+            addContent('Campo de usuário', '#username');
+            addContent('Campo de senha', '#password');
+            addContent('Botão Continuar', '.login-button');
+            addContent('Link para cadastro: Sem conta? Clique aqui!', '.signup-link');
         }
         
-        // Validação de formulário com efeito visual
-        if (loginForm) {
-            loginForm.addEventListener("submit", function(event) {
-                event.preventDefault();
-                const username = usernameInput.value.trim();
-                const password = passwordInput.value.trim();
-                
-                if(username && password) {
-                    // Adiciona classe de loading ao botão
-                    loginButton.classList.add("loading");
-                    
-                    // Simulação de processamento
-                    setTimeout(() => {
-                        loginButton.classList.remove("loading");
-                        loginButton.classList.add("success");
-                        
-                        // Redireciona após animação
-                        setTimeout(() => {
-                            window.location.href = "inicial.html";
-                        }, 1000);
-                    }, 1500);
-                    
-                    return false;
-                } else {
-                    // Destaca os campos vazios com efeito de shake
-                    if (!username) {
-                        usernameInput.parentElement.classList.add("error");
-                        setTimeout(() => {
-                            usernameInput.parentElement.classList.remove("error");
-                        }, 500);
-                    }
-                    
-                    if (!password) {
-                        passwordInput.parentElement.classList.add("error");
-                        setTimeout(() => {
-                            passwordInput.parentElement.classList.remove("error");
-                        }, 500);
-                    }
-                }
-            });
-        }
-        
-        // Animação adicional para o robô
-        const robo = document.querySelector(".robo2");
+        // Robô animado
+        const robo = document.querySelector('.robo2');
         if (robo) {
-            robo.addEventListener("click", function() {
-                this.classList.add("wave");
-                setTimeout(() => {
-                    this.classList.remove("wave");
-                }, 1000);
-            });
+            addContent('Robô animado interativo', '.robo2');
+        }
+
+        addContent('Página desenvolvida com recursos de acessibilidade', null);
+        
+        return content;
+    }
+    
+    toggleReading() {
+        if (this.isReading) {
+            this.stopReading();
+        } else {
+            this.startReading();
+        }
+    }
+    
+    startReading() {
+        this.queue = this.getReadableContent();
+        this.currentIndex = 0;
+        this.isReading = true;
+        this.isPaused = false;
+        
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        
+        btn.classList.add('active');
+        btn.innerHTML = '🔊';
+        btn.title = 'Leitura ativa - Clique para parar';
+        controls.classList.add('show');
+        
+        this.readNext();
+    }
+    
+    readNext() {
+        if (this.currentIndex >= this.queue.length) {
+            this.stopReading();
+            return;
+        }
+        
+        const currentItem = this.queue[this.currentIndex];
+        const text = currentItem.text;
+        this.currentUtterance = new SpeechSynthesisUtterance(text);
+        
+        if (this.voice) {
+            this.currentUtterance.voice = this.voice;
+        }
+        this.currentUtterance.rate = this.speed;
+        this.currentUtterance.volume = this.volume;
+        this.currentUtterance.pitch = 1;
+        this.currentUtterance.lang = 'pt-BR';
+        
+        this.highlightCurrentElement();
+        
+        this.currentUtterance.onend = () => {
+            this.currentIndex++;
+            if (this.isReading && !this.isPaused) {
+                setTimeout(() => this.readNext(), 500);
+            }
+        };
+        
+        this.currentUtterance.onerror = (e) => {
+            console.warn('Erro na síntese de voz:', e);
+            this.currentIndex++;
+            if (this.isReading) {
+                this.readNext();
+            }
+        };
+        
+        this.synth.speak(this.currentUtterance);
+    }
+    
+    highlightCurrentElement() {
+        document.querySelectorAll('.reading-highlight').forEach(el => {
+            el.classList.remove('reading-highlight');
+        });
+        
+        const currentItem = this.queue[this.currentIndex];
+        if (currentItem && currentItem.element) {
+            const element = document.querySelector(currentItem.element);
+            if (element) {
+                element.classList.add('reading-highlight');
+                element.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }
+        }
+    }
+    
+    togglePause() {
+        const pauseBtn = document.getElementById('pauseBtn');
+        const btn = document.getElementById('accessibilityBtn');
+        
+        if (this.isPaused) {
+            this.synth.resume();
+            this.isPaused = false;
+            pauseBtn.innerHTML = '⏸️ Pausar';
+            btn.classList.remove('paused');
+            btn.classList.add('active');
+        } else {
+            this.synth.pause();
+            this.isPaused = true;
+            pauseBtn.innerHTML = '▶️ Continuar';
+            btn.classList.remove('active');
+            btn.classList.add('paused');
+        }
+    }
+    
+    stopReading() {
+        this.synth.cancel();
+        this.isReading = false;
+        this.isPaused = false;
+        this.currentIndex = 0;
+        
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        const pauseBtn = document.getElementById('pauseBtn');
+        
+        btn.classList.remove('active', 'paused');
+        btn.innerHTML = '🔊';
+        btn.title = 'Ativar leitura de tela';
+        controls.classList.remove('show');
+        pauseBtn.innerHTML = '⏸️ Pausar';
+        
+        document.querySelectorAll('.reading-highlight').forEach(el => {
+            el.classList.remove('reading-highlight');
+        });
+    }
+    
+    skipCurrent() {
+        if (this.isReading) {
+            this.synth.cancel();
+            this.currentIndex++;
+            if (this.currentIndex < this.queue.length) {
+                setTimeout(() => this.readNext(), 200);
+            } else {
+                this.stopReading();
+            }
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const screenReader = new ScreenReader();
+    
+    // Código original do formulário de login
+    const loginForm = document.getElementById("loginForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const loginButton = document.querySelector(".login-button");
+    const togglePasswordBtn = document.getElementById("togglePassword");
+    
+    // Efeito de foco nos inputs
+    const inputs = document.querySelectorAll(".input-box");
+    
+    inputs.forEach(input => {
+        input.addEventListener("focus", function() {
+            this.parentElement.classList.add("input-focused");
+        });
+        
+        input.addEventListener("blur", function() {
+            if (this.value === "") {
+                this.parentElement.classList.remove("input-focused");
+            }
+        });
+        
+        if (input.value !== "") {
+            input.parentElement.classList.add("input-focused");
         }
     });
+    
+    // Mostrar/Esconder senha
+    if (togglePasswordBtn) {
+        togglePasswordBtn.addEventListener("click", function() {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                this.classList.add("showing-password");
+            } else {
+                passwordInput.type = "password";
+                this.classList.remove("showing-password");
+            }
+        });
+    }
+    
+    // Efeito no botão de login
+    if (loginButton) {
+        loginButton.addEventListener("mousemove", function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            this.style.setProperty("--x-pos", x + "px");
+            this.style.setProperty("--y-pos", y + "px");
+        });
+    }
+    
+    // Validação de formulário
+    if (loginForm) {
+        loginForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if(username && password) {
+                loginButton.classList.add("loading");
+                
+                setTimeout(() => {
+                    loginButton.classList.remove("loading");
+                    loginButton.classList.add("success");
+                    
+                    setTimeout(() => {
+                        window.location.href = "inicial.html";
+                    }, 1000);
+                }, 1500);
+                
+                return false;
+            } else {
+                if (!username) {
+                    usernameInput.parentElement.classList.add("error");
+                    setTimeout(() => {
+                        usernameInput.parentElement.classList.remove("error");
+                    }, 500);
+                }
+                
+                if (!password) {
+                    passwordInput.parentElement.classList.add("error");
+                    setTimeout(() => {
+                        passwordInput.parentElement.classList.remove("error");
+                    }, 500);
+                }
+            }
+        });
+    }
+    
+    // Animação do robô
+    const robo = document.querySelector(".robo2");
+    if (robo) {
+        robo.addEventListener("click", function() {
+            this.classList.add("wave");
+            setTimeout(() => {
+                this.classList.remove("wave");
+            }, 1000);
+        });
+    }
+});
 </script>
 </body>
 </html>

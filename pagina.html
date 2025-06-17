@@ -5,6 +5,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="questoes3saep.css">
   <title>Quiz Connect - Seleção de Matérias</title>
+  <style>
+    /* Estilos para o botão de acessibilidade */
+    .accessibility-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .accessibility-btn {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      left: -10px;
+      overflow: hidden;
+    }
+
+    .accessibility-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    }
+
+    .accessibility-btn.active {
+      background: linear-gradient(135deg, #28a745, #1e7e34);
+      animation: pulse 1.5s infinite;
+    }
+
+    .accessibility-btn.paused {
+      background: linear-gradient(135deg, #ffc107, #e0a800);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+    }
+
+    .accessibility-controls {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 200px;
+      z-index: 1000;
+    }
+
+    .accessibility-controls.show {
+      display: flex;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      font-size: 12px;
+      color: #666;
+      min-width: 70px;
+    }
+
+    .control-slider {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: #ddd;
+      outline: none;
+    }
+
+    .control-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #007bff;
+      cursor: pointer;
+    }
+
+    .control-btn {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: #e9ecef;
+    }
+
+    .control-btn.active {
+      background: #007bff;
+      color: white;
+    }
+
+    /* Highlight para texto sendo lido */
+    .reading-highlight {
+      background-color: #fff3cd !important;
+      border: 2px solid #ffc107 !important;
+      border-radius: 3px !important;
+      transition: all 0.3s ease !important;
+    }
+
+    /* Tooltip */
+    .accessibility-btn::before {
+      content: 'Clique para ativar leitura de tela';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .accessibility-btn:hover::before {
+      opacity: 1;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .accessibility-controls {
+        right: -100px;
+        min-width: 180px;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -16,6 +169,38 @@
     </nav>
     <div class="header-right">
       <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+      
+      <!-- Container de acessibilidade -->
+      <div class="accessibility-container">
+        <!-- Botão de Acessibilidade -->
+        <div style="position: relative;">
+          <button class="accessibility-btn" id="accessibilityBtn" title="Ativar/Desativar Leitura de Tela">
+            🔊
+          </button>
+          
+          <!-- Controles de Acessibilidade -->
+          <div class="accessibility-controls" id="accessibilityControls">
+            <div class="control-group">
+              <label>Velocidade:</label>
+              <input type="range" class="control-slider" id="speedControl" min="0.5" max="2" step="0.1" value="1">
+              <span id="speedValue">1x</span>
+            </div>
+            
+            <div class="control-group">
+              <label>Volume:</label>
+              <input type="range" class="control-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
+              <span id="volumeValue">100%</span>
+            </div>
+            
+            <div class="control-group">
+              <button class="control-btn" id="pauseBtn">⏸️ Pausar</button>
+              <button class="control-btn" id="stopBtn">⏹️ Parar</button>
+              <button class="control-btn" id="skipBtn">⏭️ Pular</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <button class="login-btn" title="Login">
         <img src="logo.png" alt="Ícone de Login">
       </button>
@@ -27,58 +212,361 @@
     <h1>Prova SAEP</h1>
     
     <div class="cards-container">
-  <div class="card matematica" onclick="selecionarMateria('matematica', 'Matemática')">
-    <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <!-- Formato de prova/documento -->
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-      
-      <!-- Linhas de texto -->
-      <line x1="8" y1="12" x2="16" y2="12"></line>
-      <line x1="8" y1="16" x2="16" y2="16"></line>
-      <line x1="8" y1="8" x2="12" y2="8"></line>
-      
-      <!-- Caneta/lápis -->
-      <path d="M14 2v6h6"></path>
-      <path d="M16 17l2 2 4-4"></path>
-    </svg>
-    COMEÇAR
-  </div>
-</div>
+      <div class="card matematica" onclick="selecionarMateria('matematica', 'Matemática')">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Formato de prova/documento -->
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          
+          <!-- Linhas de texto -->
+          <line x1="8" y1="12" x2="16" y2="12"></line>
+          <line x1="8" y1="16" x2="16" y2="16"></line>
+          <line x1="8" y1="8" x2="12" y2="8"></line>
+          
+          <!-- Caneta/lápis -->
+          <path d="M14 2v6h6"></path>
+          <path d="M16 17l2 2 4-4"></path>
+        </svg>
+        COMEÇAR
+      </div>
+    </div>
   
-  <!-- Tela de prova -->
-  <div class="prova-container" id="provaContainer">
-    <div class="prova-header">
-      <h2 id="provaTitulo">Prova</h2>
-      <button class="fechar-prova" onclick="fecharProva()">Fechar</button>
-    </div>
-    
-    <div class="questao-container">
-      <div class="questao" id="questaoAtual"></div>
-    </div>
-    
-    <div class="navegacao">
-      <button class="nav-button" id="btnAnterior" disabled>Anterior</button>
-      <button class="nav-button" id="btnProxima">Próxima</button>
-      <button class="nav-button" id="btnFinalizar" style="display: none;">Finalizar</button>
-    </div>
-    
-    <div class="progresso" id="progressoIndicador">
-      Questão <span id="questaoAtualNum">1</span> de <span id="totalQuestoes">8</span>
-    </div>
-    
-    <!-- Tela de Resultados -->
-    <div class="resultado-container" id="resultadoContainer">
-      <h2>Resultados</h2>
-      <div class="resultado-pontuacao">
-        <span id="acertosTotal">0</span>/<span id="totalQuestoesResultado">8</span>
+    <!-- Tela de prova -->
+    <div class="prova-container" id="provaContainer">
+      <div class="prova-header">
+        <h2 id="provaTitulo">Prova</h2>
+        <button class="fechar-prova" onclick="fecharProva()">Fechar</button>
       </div>
-      <div class="resultado-detalhes" id="resultadoDetalhes">
-        <!-- Preenchido dinamicamente via JavaScript -->
+      
+      <div class="questao-container">
+        <div class="questao" id="questaoAtual"></div>
       </div>
-      <button class="btn-finalizar" onclick="fecharProva()">Voltar ao Início</button>
-      <button class="btn-tentar-novamente" onclick="tentarNovamente()">Tentar Novamente</button>
+      
+      <div class="navegacao">
+        <button class="nav-button" id="btnAnterior" disabled>Anterior</button>
+        <button class="nav-button" id="btnProxima">Próxima</button>
+        <button class="nav-button" id="btnFinalizar" style="display: none;">Finalizar</button>
+      </div>
+      
+      <div class="progresso" id="progressoIndicador">
+        Questão <span id="questaoAtualNum">1</span> de <span id="totalQuestoes">8</span>
+      </div>
+      
+      <!-- Tela de Resultados -->
+      <div class="resultado-container" id="resultadoContainer">
+        <h2>Resultados</h2>
+        <div class="resultado-pontuacao">
+          <span id="acertosTotal">0</span>/<span id="totalQuestoesResultado">8</span>
+        </div>
+        <div class="resultado-detalhes" id="resultadoDetalhes">
+          <!-- Preenchido dinamicamente via JavaScript -->
+        </div>
+        <button class="btn-finalizar" onclick="fecharProva()">Voltar ao Início</button>
+        <button class="btn-tentar-novamente" onclick="tentarNovamente()">Tentar Novamente</button>
+      </div>
     </div>
   </div>
+  
   <script src="questoes3saep.js"></script>
+  
+  <script>
+    // Classe para gerenciar a acessibilidade de leitura de tela
+    class ScreenReader {
+      constructor() {
+        this.synth = window.speechSynthesis;
+        this.isReading = false;
+        this.isPaused = false;
+        this.currentUtterance = null;
+        this.queue = [];
+        this.currentIndex = 0;
+        this.speed = 1;
+        this.volume = 1;
+        this.voice = null;
+        
+        this.initializeVoices();
+        this.bindEvents();
+      }
+      
+      initializeVoices() {
+        // Aguarda as vozes carregarem
+        const setVoice = () => {
+          const voices = this.synth.getVoices();
+          // Tenta encontrar uma voz em português
+          this.voice = voices.find(voice => 
+            voice.lang.startsWith('pt') || 
+            voice.name.toLowerCase().includes('portuguese')
+          ) || voices[0];
+        };
+        
+        if (this.synth.getVoices().length > 0) {
+          setVoice();
+        } else {
+          this.synth.addEventListener('voiceschanged', setVoice);
+        }
+      }
+      
+      bindEvents() {
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        const speedControl = document.getElementById('speedControl');
+        const volumeControl = document.getElementById('volumeControl');
+        const speedValue = document.getElementById('speedValue');
+        const volumeValue = document.getElementById('volumeValue');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        
+        // Botão principal
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.toggleReading();
+        });
+        
+        // Mostrar/esconder controles
+        btn.addEventListener('mouseenter', () => {
+          if (this.isReading) {
+            controls.classList.add('show');
+          }
+        });
+        
+        controls.addEventListener('mouseleave', () => {
+          setTimeout(() => {
+            if (!controls.matches(':hover')) {
+              controls.classList.remove('show');
+            }
+          }, 300);
+        });
+        
+        // Controles de velocidade e volume
+        speedControl.addEventListener('input', (e) => {
+          this.speed = parseFloat(e.target.value);
+          speedValue.textContent = this.speed + 'x';
+          if (this.currentUtterance) {
+            this.currentUtterance.rate = this.speed;
+          }
+        });
+        
+        volumeControl.addEventListener('input', (e) => {
+          this.volume = parseFloat(e.target.value);
+          volumeValue.textContent = Math.round(this.volume * 100) + '%';
+          if (this.currentUtterance) {
+            this.currentUtterance.volume = this.volume;
+          }
+        });
+        
+        // Botões de controle
+        pauseBtn.addEventListener('click', () => this.togglePause());
+        stopBtn.addEventListener('click', () => this.stopReading());
+        skipBtn.addEventListener('click', () => this.skipCurrent());
+        
+        // Fechar controles ao clicar fora
+        document.addEventListener('click', (e) => {
+          if (!btn.contains(e.target) && !controls.contains(e.target)) {
+            controls.classList.remove('show');
+          }
+        });
+      }
+      
+      getReadableContent() {
+        const content = [];
+        
+        // Conteúdo específico para a página de provas SAEP
+        content.push({ text: 'Página: ' + document.title, element: null });
+        content.push({ text: 'Site Quiz Connect', element: '.logo' });
+        content.push({ text: 'Menu de navegação com opções: Início e Cadastro', element: 'nav' });
+        content.push({ text: 'Título: Prova SAEP', element: 'h1' });
+        
+        // Card de matéria
+        const card = document.querySelector('.card');
+        if (card) {
+          content.push({ 
+            text: 'Card de prova: SAEP. Clique em COMEÇAR para iniciar a prova', 
+            element: '.card' 
+          });
+        }
+        
+        // Se a prova estiver aberta
+        const provaContainer = document.getElementById('provaContainer');
+        if (provaContainer && provaContainer.style.display === 'block') {
+          content.push({ text: 'Prova aberta: ' + document.getElementById('provaTitulo').textContent, element: '#provaTitulo' });
+          content.push({ text: 'Questão atual: ' + document.getElementById('questaoAtualNum').textContent + ' de ' + document.getElementById('totalQuestoes').textContent, element: '#progressoIndicador' });
+          content.push({ text: 'Conteúdo da questão: ' + document.getElementById('questaoAtual').textContent, element: '#questaoAtual' });
+          
+          const btnAnterior = document.getElementById('btnAnterior');
+          const btnProxima = document.getElementById('btnProxima');
+          
+          if (btnAnterior.disabled) {
+            content.push({ text: 'Botão Anterior desativado', element: '#btnAnterior' });
+          } else {
+            content.push({ text: 'Botão Anterior para voltar à questão anterior', element: '#btnAnterior' });
+          }
+          
+          content.push({ text: 'Botão Próxima para avançar para a próxima questão', element: '#btnProxima' });
+        }
+        
+        // Se os resultados estiverem visíveis
+        const resultadoContainer = document.getElementById('resultadoContainer');
+        if (resultadoContainer && resultadoContainer.style.display === 'block') {
+          content.push({ 
+            text: 'Resultados: Você acertou ' + document.getElementById('acertosTotal').textContent + ' de ' + document.getElementById('totalQuestoesResultado').textContent + ' questões', 
+            element: '.resultado-pontuacao' 
+          });
+          content.push({ text: 'Detalhes dos resultados: ' + document.getElementById('resultadoDetalhes').textContent, element: '#resultadoDetalhes' });
+          content.push({ text: 'Botão Voltar ao Início para retornar à seleção de matérias', element: '.btn-finalizar' });
+          content.push({ text: 'Botão Tentar Novamente para refazer a prova', element: '.btn-tentar-novamente' });
+        }
+        
+        content.push({ text: 'Página desenvolvida com recursos de acessibilidade', element: null });
+        content.push({ text: 'Use os controles de velocidade e volume para personalizar a leitura', element: null });
+        
+        return content;
+      }
+      
+      toggleReading() {
+        if (this.isReading) {
+          this.stopReading();
+        } else {
+          this.startReading();
+        }
+      }
+      
+      startReading() {
+        this.queue = this.getReadableContent();
+        this.currentIndex = 0;
+        this.isReading = true;
+        this.isPaused = false;
+        
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        
+        btn.classList.add('active');
+        btn.innerHTML = '🔊';
+        btn.title = 'Leitura ativa - Clique para parar';
+        controls.classList.add('show');
+        
+        this.readNext();
+      }
+      
+      readNext() {
+        if (this.currentIndex >= this.queue.length) {
+          this.stopReading();
+          return;
+        }
+        
+        const currentItem = this.queue[this.currentIndex];
+        const text = currentItem.text;
+        this.currentUtterance = new SpeechSynthesisUtterance(text);
+        
+        // Configurações da voz
+        if (this.voice) {
+          this.currentUtterance.voice = this.voice;
+        }
+        this.currentUtterance.rate = this.speed;
+        this.currentUtterance.volume = this.volume;
+        this.currentUtterance.pitch = 1;
+        this.currentUtterance.lang = 'pt-BR';
+        
+        // Destacar elemento ANTES de começar a falar
+        this.highlightCurrentElement();
+        
+        // Eventos
+        this.currentUtterance.onend = () => {
+          this.currentIndex++;
+          if (this.isReading && !this.isPaused) {
+            setTimeout(() => this.readNext(), 500);
+          }
+        };
+        
+        this.currentUtterance.onerror = (e) => {
+          console.warn('Erro na síntese de voz:', e);
+          this.currentIndex++;
+          if (this.isReading) {
+            this.readNext();
+          }
+        };
+        
+        this.synth.speak(this.currentUtterance);
+      }
+      
+      highlightCurrentElement() {
+        // Remove highlight anterior
+        document.querySelectorAll('.reading-highlight').forEach(el => {
+          el.classList.remove('reading-highlight');
+        });
+        
+        // Pega o elemento atual baseado no seletor
+        const currentItem = this.queue[this.currentIndex];
+        if (currentItem && currentItem.element) {
+          const element = document.querySelector(currentItem.element);
+          if (element) {
+            element.classList.add('reading-highlight');
+            
+            // Rola a página para mostrar o elemento destacado
+            element.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+          }
+        }
+      }
+      
+      togglePause() {
+        const pauseBtn = document.getElementById('pauseBtn');
+        const btn = document.getElementById('accessibilityBtn');
+        
+        if (this.isPaused) {
+          this.synth.resume();
+          this.isPaused = false;
+          pauseBtn.innerHTML = '⏸️ Pausar';
+          btn.classList.remove('paused');
+          btn.classList.add('active');
+        } else {
+          this.synth.pause();
+          this.isPaused = true;
+          pauseBtn.innerHTML = '▶️ Continuar';
+          btn.classList.remove('active');
+          btn.classList.add('paused');
+        }
+      }
+      
+      stopReading() {
+        this.synth.cancel();
+        this.isReading = false;
+        this.isPaused = false;
+        this.currentIndex = 0;
+        
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        const pauseBtn = document.getElementById('pauseBtn');
+        
+        btn.classList.remove('active', 'paused');
+        btn.innerHTML = '🔊';
+        btn.title = 'Ativar leitura de tela';
+        controls.classList.remove('show');
+        pauseBtn.innerHTML = '⏸️ Pausar';
+        
+        // Remove highlights
+        document.querySelectorAll('.reading-highlight').forEach(el => {
+          el.classList.remove('reading-highlight');
+        });
+      }
+      
+      skipCurrent() {
+        if (this.isReading) {
+          this.synth.cancel();
+          this.currentIndex++;
+          if (this.currentIndex < this.queue.length) {
+            setTimeout(() => this.readNext(), 200);
+          } else {
+            this.stopReading();
+          }
+        }
+      }
+    }
+    
+    document.addEventListener("DOMContentLoaded", function () {
+      // Inicializa o leitor de tela
+      const screenReader = new ScreenReader();
+    });
+  </script>
 </body>
 </html>

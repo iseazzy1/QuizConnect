@@ -16,6 +16,38 @@
     </nav>
     <div class="header-right">
       <img src="sesi-logo.png" alt="SESI Logo" class="sesi-logo">
+      
+      <!-- Container de acessibilidade -->
+      <div class="accessibility-container">
+        <!-- Botão de Acessibilidade -->
+        <div style="position: relative;">
+          <button class="accessibility-btn" id="accessibilityBtn" title="Ativar/Desativar Leitura de Tela">
+            🔊
+          </button>
+          
+          <!-- Controles de Acessibilidade -->
+          <div class="accessibility-controls" id="accessibilityControls">
+            <div class="control-group">
+              <label>Velocidade:</label>
+              <input type="range" class="control-slider" id="speedControl" min="0.5" max="2" step="0.1" value="1">
+              <span id="speedValue">1x</span>
+            </div>
+            
+            <div class="control-group">
+              <label>Volume:</label>
+              <input type="range" class="control-slider" id="volumeControl" min="0" max="1" step="0.1" value="1">
+              <span id="volumeValue">100%</span>
+            </div>
+            
+            <div class="control-group">
+              <button class="control-btn" id="pauseBtn">⏸️ Pausar</button>
+              <button class="control-btn" id="stopBtn">⏹️ Parar</button>
+              <button class="control-btn" id="skipBtn">⏭️ Pular</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <button class="login-btn" title="Login">
         <img src="logo.png" alt="Ícone de Login">
       </button>
@@ -103,6 +135,305 @@
       <button class="btn-tentar-novamente" onclick="tentarNovamente()">Tentar Novamente</button>
     </div>
   </div>
- <script src="questoes9passe.js"></script>
+  
+  <script src="questoes9passe.js"></script>
+  
+  <script>
+    // Classe para gerenciar a acessibilidade de leitura de tela
+    class ScreenReader {
+      constructor() {
+        this.synth = window.speechSynthesis;
+        this.isReading = false;
+        this.isPaused = false;
+        this.currentUtterance = null;
+        this.queue = [];
+        this.currentIndex = 0;
+        this.speed = 1;
+        this.volume = 1;
+        this.voice = null;
+        
+        this.initializeVoices();
+        this.bindEvents();
+      }
+      
+      initializeVoices() {
+        // Aguarda as vozes carregarem
+        const setVoice = () => {
+          const voices = this.synth.getVoices();
+          // Tenta encontrar uma voz em português
+          this.voice = voices.find(voice => 
+            voice.lang.startsWith('pt') || 
+            voice.name.toLowerCase().includes('portuguese')
+          ) || voices[0];
+        };
+        
+        if (this.synth.getVoices().length > 0) {
+          setVoice();
+        } else {
+          this.synth.addEventListener('voiceschanged', setVoice);
+        }
+      }
+      
+      bindEvents() {
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        const speedControl = document.getElementById('speedControl');
+        const volumeControl = document.getElementById('volumeControl');
+        const speedValue = document.getElementById('speedValue');
+        const volumeValue = document.getElementById('volumeValue');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        
+        // Botão principal
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.toggleReading();
+        });
+        
+        // Mostrar/esconder controles
+        btn.addEventListener('mouseenter', () => {
+          if (this.isReading) {
+            controls.classList.add('show');
+          }
+        });
+        
+        controls.addEventListener('mouseleave', () => {
+          setTimeout(() => {
+            if (!controls.matches(':hover')) {
+              controls.classList.remove('show');
+            }
+          }, 300);
+        });
+        
+        // Controles de velocidade e volume
+        speedControl.addEventListener('input', (e) => {
+          this.speed = parseFloat(e.target.value);
+          speedValue.textContent = this.speed + 'x';
+          if (this.currentUtterance) {
+            this.currentUtterance.rate = this.speed;
+          }
+        });
+        
+        volumeControl.addEventListener('input', (e) => {
+          this.volume = parseFloat(e.target.value);
+          volumeValue.textContent = Math.round(this.volume * 100) + '%';
+          if (this.currentUtterance) {
+            this.currentUtterance.volume = this.volume;
+          }
+        });
+        
+        // Botões de controle
+        pauseBtn.addEventListener('click', () => this.togglePause());
+        stopBtn.addEventListener('click', () => this.stopReading());
+        skipBtn.addEventListener('click', () => this.skipCurrent());
+        
+        // Fechar controles ao clicar fora
+        document.addEventListener('click', (e) => {
+          if (!btn.contains(e.target) && !controls.contains(e.target)) {
+            controls.classList.remove('show');
+          }
+        });
+      }
+      
+      getReadableContent() {
+        const content = [];
+        
+        // Conteúdo específico para a página de seleção de matérias do 9º ano
+        content.push({ text: 'Página: ' + document.title, element: null });
+        content.push({ text: 'Site Quiz Connect', element: '.logo' });
+        content.push({ text: 'Menu de navegação com opções: Início e Cadastro', element: 'nav' });
+        content.push({ text: 'Título: Escolha sua Área do Conhecimento para realizar a Prova', element: 'h1' });
+        
+        // Cards de matérias
+        content.push({ text: 'Card de Matemática. Clique para selecionar esta matéria', element: '.card.matematica' });
+        content.push({ text: 'Card de Ciências da Natureza. Clique para selecionar esta matéria', element: '.card.natureza' });
+        content.push({ text: 'Card de Ciências Humanas. Clique para selecionar esta matéria', element: '.card.humanas' });
+        content.push({ text: 'Card de Linguagens. Clique para selecionar esta matéria', element: '.card.linguagens' });
+        
+        // Se a prova estiver aberta
+        const provaContainer = document.getElementById('provaContainer');
+        if (provaContainer && provaContainer.style.display === 'block') {
+          content.push({ text: 'Prova aberta: ' + document.getElementById('provaTitulo').textContent, element: '#provaTitulo' });
+          content.push({ text: 'Questão atual: ' + document.getElementById('questaoAtualNum').textContent + ' de ' + document.getElementById('totalQuestoes').textContent, element: '#progressoIndicador' });
+          content.push({ text: 'Conteúdo da questão: ' + document.getElementById('questaoAtual').textContent, element: '#questaoAtual' });
+          
+          const btnAnterior = document.getElementById('btnAnterior');
+          const btnProxima = document.getElementById('btnProxima');
+          
+          if (btnAnterior.disabled) {
+            content.push({ text: 'Botão Anterior desativado', element: '#btnAnterior' });
+          } else {
+            content.push({ text: 'Botão Anterior para voltar à questão anterior', element: '#btnAnterior' });
+          }
+          
+          content.push({ text: 'Botão Próxima para avançar para a próxima questão', element: '#btnProxima' });
+        }
+        
+        // Se os resultados estiverem visíveis
+        const resultadoContainer = document.getElementById('resultadoContainer');
+        if (resultadoContainer && resultadoContainer.style.display === 'block') {
+          content.push({ 
+            text: 'Resultados: Você acertou ' + document.getElementById('acertosTotal').textContent + ' de ' + document.getElementById('totalQuestoesResultado').textContent + ' questões', 
+            element: '.resultado-pontuacao' 
+          });
+          content.push({ text: 'Detalhes dos resultados: ' + document.getElementById('resultadoDetalhes').textContent, element: '#resultadoDetalhes' });
+          content.push({ text: 'Botão Voltar ao Início para retornar à seleção de matérias', element: '.btn-finalizar' });
+          content.push({ text: 'Botão Tentar Novamente para refazer a prova', element: '.btn-tentar-novamente' });
+        }
+        
+        content.push({ text: 'Página desenvolvida com recursos de acessibilidade', element: null });
+        content.push({ text: 'Use os controles de velocidade e volume para personalizar a leitura', element: null });
+        
+        return content;
+      }
+      
+      toggleReading() {
+        if (this.isReading) {
+          this.stopReading();
+        } else {
+          this.startReading();
+        }
+      }
+      
+      startReading() {
+        this.queue = this.getReadableContent();
+        this.currentIndex = 0;
+        this.isReading = true;
+        this.isPaused = false;
+        
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        
+        btn.classList.add('active');
+        btn.innerHTML = '🔊';
+        btn.title = 'Leitura ativa - Clique para parar';
+        controls.classList.add('show');
+        
+        this.readNext();
+      }
+      
+      readNext() {
+        if (this.currentIndex >= this.queue.length) {
+          this.stopReading();
+          return;
+        }
+        
+        const currentItem = this.queue[this.currentIndex];
+        const text = currentItem.text;
+        this.currentUtterance = new SpeechSynthesisUtterance(text);
+        
+        // Configurações da voz
+        if (this.voice) {
+          this.currentUtterance.voice = this.voice;
+        }
+        this.currentUtterance.rate = this.speed;
+        this.currentUtterance.volume = this.volume;
+        this.currentUtterance.pitch = 1;
+        this.currentUtterance.lang = 'pt-BR';
+        
+        // Destacar elemento ANTES de começar a falar
+        this.highlightCurrentElement();
+        
+        // Eventos
+        this.currentUtterance.onend = () => {
+          this.currentIndex++;
+          if (this.isReading && !this.isPaused) {
+            setTimeout(() => this.readNext(), 500);
+          }
+        };
+        
+        this.currentUtterance.onerror = (e) => {
+          console.warn('Erro na síntese de voz:', e);
+          this.currentIndex++;
+          if (this.isReading) {
+            this.readNext();
+          }
+        };
+        
+        this.synth.speak(this.currentUtterance);
+      }
+      
+      highlightCurrentElement() {
+        // Remove highlight anterior
+        document.querySelectorAll('.reading-highlight').forEach(el => {
+          el.classList.remove('reading-highlight');
+        });
+        
+        // Pega o elemento atual baseado no seletor
+        const currentItem = this.queue[this.currentIndex];
+        if (currentItem && currentItem.element) {
+          const element = document.querySelector(currentItem.element);
+          if (element) {
+            element.classList.add('reading-highlight');
+            
+            // Rola a página para mostrar o elemento destacado
+            element.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+          }
+        }
+      }
+      
+      togglePause() {
+        const pauseBtn = document.getElementById('pauseBtn');
+        const btn = document.getElementById('accessibilityBtn');
+        
+        if (this.isPaused) {
+          this.synth.resume();
+          this.isPaused = false;
+          pauseBtn.innerHTML = '⏸️ Pausar';
+          btn.classList.remove('paused');
+          btn.classList.add('active');
+        } else {
+          this.synth.pause();
+          this.isPaused = true;
+          pauseBtn.innerHTML = '▶️ Continuar';
+          btn.classList.remove('active');
+          btn.classList.add('paused');
+        }
+      }
+      
+      stopReading() {
+        this.synth.cancel();
+        this.isReading = false;
+        this.isPaused = false;
+        this.currentIndex = 0;
+        
+        const btn = document.getElementById('accessibilityBtn');
+        const controls = document.getElementById('accessibilityControls');
+        const pauseBtn = document.getElementById('pauseBtn');
+        
+        btn.classList.remove('active', 'paused');
+        btn.innerHTML = '🔊';
+        btn.title = 'Ativar leitura de tela';
+        controls.classList.remove('show');
+        pauseBtn.innerHTML = '⏸️ Pausar';
+        
+        // Remove highlights
+        document.querySelectorAll('.reading-highlight').forEach(el => {
+          el.classList.remove('reading-highlight');
+        });
+      }
+      
+      skipCurrent() {
+        if (this.isReading) {
+          this.synth.cancel();
+          this.currentIndex++;
+          if (this.currentIndex < this.queue.length) {
+            setTimeout(() => this.readNext(), 200);
+          } else {
+            this.stopReading();
+          }
+        }
+      }
+    }
+    
+    document.addEventListener("DOMContentLoaded", function () {
+      // Inicializa o leitor de tela
+      const screenReader = new ScreenReader();
+    });
+  </script>
 </body>
 </html>
